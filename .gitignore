@@ -1,0 +1,8 @@
+src/.antlr/
+src/antlr4-generated/
+src/inc/
+output/
+ccomp
+*.o
+tests/compiler-test-output
+guides/
