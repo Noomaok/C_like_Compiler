@@ -9,3 +9,8 @@ I use a docker image to compile and run the project.
 There is two sh scripts to start and stop the container needed for this project.  
 Once launch, go in the source directory and make the project.  
 You can then run the tests in the tests directory.
+
+## C language subset
+
+Here is a list of elements that the compiler can handle : 
+- `int32_t` and `int64_t` type

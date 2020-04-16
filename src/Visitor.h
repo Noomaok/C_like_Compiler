@@ -3,23 +3,18 @@
 #include "antlr4-runtime.h"
 #include "antlr4-generated/ccompVisitor.h"
 
-class Visitor : public ccompVisitor {
+#include "Program.h"
+#include "Function.h"
+#include "Variable.h"
+#include "ReturnInstr.h"
+
+class Visitor : public ccompVisitor 
+{
 
 public:
 
-	virtual antlrcpp::Any visitAxiom(ccompParser::AxiomContext *ctx) override {
-		return visitChildren(ctx);
-	}
+	virtual antlrcpp::Any visitAxiom(ccompParser::AxiomContext *ctx) override;
 
-	virtual antlrcpp::Any visitProg(ccompParser::ProgContext *ctx) override {
-
-		int retval = stoi(ctx->CONST()->getText());
-		std::cout<<".globl	main\n"
-			" main: \n"
-			" 	movl	$"<<retval<<", %eax\n"
-			" 	ret\n";
-
-		return 0;
-	}
+	virtual antlrcpp::Any visitFunction_definition(ccompParser::Function_definitionContext *ctx) override;
 
 };

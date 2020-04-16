@@ -1,8 +1,10 @@
+.vscode/
 src/.antlr/
 src/antlr4-generated/
 src/inc/
 output/
 ccomp
+core
 *.o
 tests/compiler-test-output
 guides/
