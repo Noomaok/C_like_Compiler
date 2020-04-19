@@ -11,6 +11,14 @@ ReturnInstr::~ReturnInstr()
 
 std::string ReturnInstr::buildIR(CFG* cfg)
 {
-	exprReturned->buildIR(cfg);
+	std::string identExpr = exprReturned->buildIR(cfg);
+	Symbol* symbolExpr = cfg->getSymbol(identExpr);
+	std::vector<std::string> params;
+
+	if(symbolExpr->getContentType() == ContentType::CONST) {
+		params.push_back("$" + symbolExpr->getContent());
+		cfg->currentBB->addIRInstr(Operation::copy_ret_reg, params, symbolExpr->getSymbolSize());
+	}
+
 	return "";
 }

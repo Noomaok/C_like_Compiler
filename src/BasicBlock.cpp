@@ -12,7 +12,7 @@ BasicBlock::~BasicBlock()
 	}
 }
 
-void BasicBlock::addIRInstr(Operation op, std::vector<std::string> params, OpSize opSize)
+void BasicBlock::addIRInstr(Operation op, std::vector<std::string> params, SymbolSize opSize)
 {
 	instrs.push_back(new IRInstr(this, op, params, opSize));
 }

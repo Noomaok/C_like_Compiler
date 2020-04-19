@@ -12,7 +12,7 @@ public:
 
 	void gen_asm(std::ostream &o);
 
-	void addIRInstr(Operation op, std::vector<std::string> params, OpSize opSize);
+	void addIRInstr(Operation op, std::vector<std::string> params, SymbolSize opSize);
 
 	BasicBlock* exit_true;
 	BasicBlock* exit_false;

@@ -6,14 +6,18 @@
 #include <iostream>
 #include <cstring>
 
-enum OpSize { _8, _32, _64 };
+
+enum SymbolType { VARIABLE, FUNCTION };
+enum ContentType { CONST, CARACTER, NAME };
+
+enum SymbolSize { _8, _32, _64 };
 enum Type { int32, int64 };
-enum TypeVar { NAME, CARACTER, INTEGER };
 enum JumpType { JE };
 
 enum Operation
 {
-	move,
+	copy,
+	copy_ret_reg,
 	push,
 	pop,
 	leave,

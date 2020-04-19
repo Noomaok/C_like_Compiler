@@ -3,12 +3,12 @@
 #include "Core.h"
 #include "Function.h"
 #include "BasicBlock.h"
-#include "IRVariable.h"
+#include "Symbol.h"
 
 class CFG
 {
 public:
-	CFG(Function* ast);
+	CFG(Function* ast, std::map<std::string, Symbol*> symboleTable);
 	~CFG();
 
 	BasicBlock* genPrologue();
@@ -18,7 +18,7 @@ public:
 	void addBasicBlock(BasicBlock* newBB);
 
 	std::string createNewTempVar(Type type);
-	IRVariable* getVariable(std::string varName);
+	Symbol* getSymbol(std::string varName);
 
 	void gen_asm(std::ostream &o);
 
@@ -34,5 +34,5 @@ private:
 	int nextFreeSymbolIndex;
 	int nextBBNumber;
 	int nextTempVarNumber;
-	std::map<std::string, IRVariable*> symbolTable;
+	std::map<std::string, Symbol*> symbolTable;
 };

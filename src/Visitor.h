@@ -5,7 +5,7 @@
 
 #include "Program.h"
 #include "Function.h"
-#include "Variable.h"
+#include "Symbol.h"
 #include "ReturnInstr.h"
 
 class Visitor : public ccompVisitor 
@@ -17,4 +17,14 @@ public:
 
 	virtual antlrcpp::Any visitFunction_definition(ccompParser::Function_definitionContext *ctx) override;
 
+	virtual antlrcpp::Any visitReturn(ccompParser::ReturnContext *ctx) override;
+
+    virtual antlrcpp::Any visitDeclaration(ccompParser::DeclarationContext *ctx) override;
+
+    virtual antlrcpp::Any visitAffectation(ccompParser::AffectationContext *ctx) override;
+
+    virtual antlrcpp::Any visitConstant(ccompParser::ConstantContext *ctx) override;
+
+private:
+	std::map<std::string, Symbol*> symbolTable;
 };

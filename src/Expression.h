@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Core.h"
-#include "CFG.h"
+
+class CFG;
 
 class Expression
 {

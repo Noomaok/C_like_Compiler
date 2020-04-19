@@ -1,21 +1,21 @@
 #include "IRInstr.h"
 
-IRInstr::IRInstr(BasicBlock* bbParent, Operation op, std::vector<std::string> params, OpSize opSize)
+IRInstr::IRInstr(BasicBlock* bbParent, Operation op, std::vector<std::string> params, SymbolSize opSize)
 : bbParent(bbParent), op(op), params(params)
 {
 	switch (opSize)
 	{
-	case OpSize::_8:
+	case SymbolSize::_8:
 		regExt = "";
 		cmdExt = "";
 		break;
 	
-	case OpSize::_32:
+	case SymbolSize::_32:
 		regExt = "e";
 		cmdExt = "l";
 		break;
 
-	case OpSize::_64:
+	case SymbolSize::_64:
 		regExt = "r";
 		cmdExt = "q";
 		break;
@@ -32,8 +32,12 @@ void IRInstr::gen_asm(std::ostream &o)
 {
 	switch (op)
 	{
-	case Operation::move:
+	case Operation::copy:
 		o << "\tmov"+ cmdExt + " " + params.at(0) + ", " + params.at(1) << std::endl;
+		break;
+
+	case Operation::copy_ret_reg:
+		o << "\tmov"+ cmdExt + " " + params.at(0) + ", %" + regExt + "ax" << std::endl;
 		break;
 
 	case Operation::push:
@@ -46,10 +50,6 @@ void IRInstr::gen_asm(std::ostream &o)
 
 	case Operation::leave:
 		o << "\tret" << std::endl;
-		break;
-
-	case Operation::load_const:
-		o << "\tmov"+ cmdExt +" $"+ params.at(0) +", %"+regExt+"ax" << std::endl;
 		break;
 	
 	default:

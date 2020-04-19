@@ -7,7 +7,7 @@ class BasicBlock;
 class IRInstr
 {
 public:
-	IRInstr(BasicBlock* bbParent, Operation op, std::vector<std::string> params, OpSize opSize);
+	IRInstr(BasicBlock* bbParent, Operation op, std::vector<std::string> params, SymbolSize opSize);
 	~IRInstr();
 
 	void gen_asm(std::ostream &o);

@@ -40,7 +40,7 @@ int main(int argn, const char **argv)
 		std::vector<CFG*> listeCFG;
 
 		for(auto pFunction : program->getAllFunctions()) {
-			CFG *newCfg = new CFG(pFunction);
+			CFG *newCfg = new CFG(pFunction, program->symbolTable);
 			listeCFG.push_back(newCfg);
 		}
 

@@ -2,7 +2,17 @@ grammar ccomp;
 
 axiom : function_definition+ ;
 
-function_definition : TYPE NAME '(' ')' '{' RETURN CONST ';' '}' ;
+function_definition : TYPE NAME '(' ')' '{' (instruction)* '}' ;
+
+instruction :
+  RETURN expr ';'           #return
+| TYPE NAME (',' NAME)* ';' #declaration
+| NAME '=' expr ';'         #affectation
+;
+
+expr :
+  CONST #constant
+;
 
 TYPE :
   'int32_t'

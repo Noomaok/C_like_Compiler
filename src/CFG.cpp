@@ -1,7 +1,7 @@
 #include "CFG.h"
 
-CFG::CFG(Function* ast)
-: ast(ast), nextBBNumber(0)
+CFG::CFG(Function* ast, std::map<std::string, Symbol*> symbolTable)
+: ast(ast), nextBBNumber(0), symbolTable(symbolTable)
 {
 	//initTableIRVar
 	BasicBlock* prologue = genPrologue();
@@ -34,12 +34,12 @@ BasicBlock* CFG::genPrologue()
 
 	std::vector<std::string> params;
 	params.push_back("%rbp");
-	prologue->addIRInstr(Operation::push, params, OpSize::_64);
+	prologue->addIRInstr(Operation::push, params, SymbolSize::_64);
 
 	std::vector<std::string> params2;
 	params2.push_back("%rsp");
 	params2.push_back("%rbp");
-	prologue->addIRInstr(Operation::move, params2, OpSize::_64);
+	prologue->addIRInstr(Operation::copy, params2, SymbolSize::_64);
 
 	return prologue;
 }
@@ -50,9 +50,9 @@ BasicBlock* CFG::genEpilogue()
 
 	std::vector<std::string> params;
 	params.push_back("%rbp");
-	epilogue->addIRInstr(Operation::pop, params, OpSize::_64);
+	epilogue->addIRInstr(Operation::pop, params, SymbolSize::_64);
 
-	epilogue->addIRInstr(Operation::leave, params, OpSize::_64);
+	epilogue->addIRInstr(Operation::leave, params, SymbolSize::_64);
 
 	return epilogue;
 }
@@ -74,9 +74,9 @@ std::string CFG::createNewTempVar(Type type)
 
 }
 
-IRVariable* CFG::getVariable(std::string varName)
+Symbol* CFG::getSymbol(std::string varName)
 {
-
+	return symbolTable.at(varName);
 }
 
 void CFG::gen_asm(std::ostream &o)
