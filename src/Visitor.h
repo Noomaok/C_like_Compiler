@@ -7,6 +7,7 @@
 #include "Function.h"
 #include "Symbol.h"
 #include "ReturnInstr.h"
+#include "Declaration.h"
 
 class Visitor : public ccompVisitor 
 {

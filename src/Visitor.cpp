@@ -25,7 +25,7 @@ antlrcpp::Any Visitor::visitFunction_definition(ccompParser::Function_definition
 
 	for(int i = 0; i < ctx->instruction().size(); i++) {
 		Instruction* instr = (Instruction*) visit(ctx->instruction().at(i));
-		function->addInstructions(instr);
+		if(instr != nullptr) function->addInstructions(instr);
 	}
 	
 	return function;
@@ -48,7 +48,22 @@ antlrcpp::Any Visitor::visitConstant(ccompParser::ConstantContext *ctx)
 
 antlrcpp::Any Visitor::visitDeclaration(ccompParser::DeclarationContext *ctx)
 {
+	std::string type = ctx->TYPE()->getText();
+	SymbolSize sSize;
+	if(strcmp(type.c_str(), "int32_t") == 0) sSize = SymbolSize::_32;
+	else if(strcmp(type.c_str(), "int64_t") == 0) sSize = SymbolSize::_64;
 
+	std::vector<Symbol*> symbolsDeclared;
+	for(int i = 0; i < ctx->NAME().size(); i++)
+	{
+		std::string varName = ctx->NAME().at(i)->getText();
+		Symbol* symbolVar = new Symbol(varName, varName, SymbolType::VARIABLE, ContentType::NAME);
+		symbolVar->setSymbolSize(sSize);
+		symbolTable.insert(std::make_pair(varName, symbolVar));
+		symbolsDeclared.push_back(symbolVar);
+	}
+
+	return (Instruction*) new Declaration(symbolsDeclared, sSize);
 }
 
 antlrcpp::Any Visitor::visitAffectation(ccompParser::AffectationContext *ctx)

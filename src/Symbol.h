@@ -14,7 +14,11 @@ public:
 	std::string getContent() { return content; };
 	SymbolType getSymbolType() { return sType; };
 	SymbolSize getSymbolSize() { return sSize; };
+	void setSymbolSize(SymbolSize newSSize) { sSize = newSSize; };
 	ContentType getContentType() { return cType; };
+
+	void setOffset(int offset) { this->offset = offset; };
+	int getOffset() { return offset; };
 
 private:
 	std::string ident;
@@ -22,4 +26,5 @@ private:
 	SymbolType sType;
 	ContentType cType;
 	SymbolSize sSize;
+	int offset;
 };
