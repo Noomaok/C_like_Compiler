@@ -12,6 +12,7 @@ instruction :
 
 expr :
   CONST #constant
+| NAME  #variable
 ;
 
 TYPE :

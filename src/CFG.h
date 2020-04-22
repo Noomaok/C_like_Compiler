@@ -25,7 +25,9 @@ public:
 	BasicBlock* currentBB;
 	BasicBlock* epilogueBB;
 private:
-	int getOffsetBaseOnType(Type type);
+	void setSymbolsOffsets();
+
+	int getOffsetBaseOnSymbolSize(SymbolSize sSize);
 
 	Function* ast;
 	std::vector<BasicBlock*> allBBs;

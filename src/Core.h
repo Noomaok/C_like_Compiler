@@ -17,7 +17,10 @@ enum JumpType { JE };
 enum Operation
 {
 	copy,
-	copy_ret_reg,
+	copy_const_to_var,
+	copy_var_to_var,
+	copy_const_ret_reg,
+	copy_var_ret_reg,
 	push,
 	pop,
 	leave,

@@ -36,8 +36,21 @@ void IRInstr::gen_asm(std::ostream &o)
 		o << "\tmov"+ cmdExt + " " + params.at(0) + ", " + params.at(1) << std::endl;
 		break;
 
-	case Operation::copy_ret_reg:
-		o << "\tmov"+ cmdExt + " " + params.at(0) + ", %" + regExt + "ax" << std::endl;
+	case Operation::copy_const_to_var:
+		o << "\tmov"+ cmdExt + " $" + params.at(0) + ", -" + params.at(1) + "(%rbp)" << std::endl;
+		break;
+
+	case Operation::copy_var_to_var:
+		o << "\tmov"+ cmdExt + " -" + params.at(0) + "(%rbp), %" + regExt + "ax" << std::endl;
+		o << "\tmov"+ cmdExt + " %" + regExt + "ax, -" + params.at(1) + "(%rbp)" << std::endl;
+		break;
+
+	case Operation::copy_const_ret_reg:
+		o << "\tmov"+ cmdExt + " $" + params.at(0) + ", %" + regExt + "ax" << std::endl;
+		break;
+
+	case Operation::copy_var_ret_reg:
+		o << "\tmov"+ cmdExt + " -" + params.at(0) + "(%rbp), %" + regExt + "ax" << std::endl;
 		break;
 
 	case Operation::push:

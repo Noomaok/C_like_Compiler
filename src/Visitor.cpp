@@ -68,5 +68,14 @@ antlrcpp::Any Visitor::visitDeclaration(ccompParser::DeclarationContext *ctx)
 
 antlrcpp::Any Visitor::visitAffectation(ccompParser::AffectationContext *ctx)
 {
+	std::string varIdent = ctx->NAME()->getText();
+	Expression* expr = (Expression*) visit(ctx->expr());
+	return (Instruction*) new Affectation(varIdent, expr);
+}
 
+antlrcpp::Any Visitor::visitVariable(ccompParser::VariableContext *ctx)
+{
+	std::string varIdent = ctx->NAME()->getText();
+	Symbol* varSymbol = symbolTable.at(varIdent);
+	return (Expression*) varSymbol;
 }

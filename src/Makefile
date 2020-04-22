@@ -7,7 +7,7 @@ ANTLR4_BINDIR=/usr/bin
 ANTLR4_INCDIR=/usr/include/antlr4-runtime
 ANTLR4_LIBDIR=/usr/lib/x86_64-linux-gnu
 
-AST=Declaration.cpp Expression.cpp Function.cpp Instruction.cpp Program.cpp ReturnInstr.cpp Symbol.cpp
+AST=Affectation.cpp Declaration.cpp Expression.cpp Function.cpp Instruction.cpp Program.cpp ReturnInstr.cpp Symbol.cpp
 SOURCES=$(AST) BasicBlock.cpp CFG.cpp IRInstr.cpp Visitor.cpp main.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 

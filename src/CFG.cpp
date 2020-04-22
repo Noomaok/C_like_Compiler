@@ -3,7 +3,7 @@
 CFG::CFG(Function* ast, std::map<std::string, Symbol*> symbolTable)
 : ast(ast), nextBBNumber(0), symbolTable(symbolTable)
 {
-	//initTableIRVar
+	setSymbolsOffsets();
 	BasicBlock* prologue = genPrologue();
 	addBasicBlock(prologue);
 	BasicBlock* base = new BasicBlock(newBBName());
@@ -87,4 +87,40 @@ void CFG::gen_asm(std::ostream &o)
 	{
 		bbPTR->gen_asm(o);
 	}
+}
+
+void CFG::setSymbolsOffsets()
+{
+	sizeAllocated = 0;
+	std::map<std::string, Symbol*>::iterator it;
+
+	for(it = symbolTable.begin(); it != symbolTable.end(); it++) {
+		if(it->second->getContentType() != ContentType::CONST) {
+			sizeAllocated += getOffsetBaseOnSymbolSize(it->second->getSymbolSize());
+			it->second->setOffset(sizeAllocated);
+		}
+	}
+}
+
+int CFG::getOffsetBaseOnSymbolSize(SymbolSize sSize)
+{
+	int offset;
+	switch (sSize)
+	{
+	case SymbolSize::_8:
+		offset = 1;
+		break;
+
+	case SymbolSize::_32:
+		offset = 4;
+		break;
+
+	case SymbolSize::_64:
+		offset = 8;
+		break;
+	
+	default:
+		break;
+	}
+	return offset;
 }

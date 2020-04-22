@@ -8,6 +8,7 @@
 #include "Symbol.h"
 #include "ReturnInstr.h"
 #include "Declaration.h"
+#include "Affectation.h"
 
 class Visitor : public ccompVisitor 
 {
@@ -25,6 +26,8 @@ public:
     virtual antlrcpp::Any visitAffectation(ccompParser::AffectationContext *ctx) override;
 
     virtual antlrcpp::Any visitConstant(ccompParser::ConstantContext *ctx) override;
+
+	virtual antlrcpp::Any visitVariable(ccompParser::VariableContext *ctx) override;
 
 private:
 	std::map<std::string, Symbol*> symbolTable;
