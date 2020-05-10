@@ -79,3 +79,19 @@ antlrcpp::Any Visitor::visitVariable(ccompParser::VariableContext *ctx)
 	Symbol* varSymbol = symbolTable.at(varIdent);
 	return (Expression*) varSymbol;
 }
+
+antlrcpp::Any Visitor::visitDeclareAndAffec(ccompParser::DeclareAndAffecContext *ctx)
+{
+	std::string type = ctx->TYPE()->getText();
+	SymbolSize sSize;
+	if(strcmp(type.c_str(), "int32_t") == 0) sSize = SymbolSize::_32;
+	else if(strcmp(type.c_str(), "int64_t") == 0) sSize = SymbolSize::_64;
+
+	std::string varName = ctx->NAME()->getText();
+	Symbol* symbolVar = new Symbol(varName, varName, SymbolType::VARIABLE, ContentType::NAME);
+	symbolVar->setSymbolSize(sSize);
+	symbolTable.insert(std::make_pair(varName, symbolVar));
+	Expression* varExpr = (Expression*) visit(ctx->expr());
+
+	return (Instruction*) new Affectation(varName, varExpr);
+}

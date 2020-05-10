@@ -29,6 +29,8 @@ public:
 
 	virtual antlrcpp::Any visitVariable(ccompParser::VariableContext *ctx) override;
 
+	virtual antlrcpp::Any visitDeclareAndAffec(ccompParser::DeclareAndAffecContext *ctx) override;
+
 private:
 	std::map<std::string, Symbol*> symbolTable;
 };

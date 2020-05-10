@@ -8,6 +8,7 @@ instruction :
   RETURN expr ';'           #return
 | TYPE NAME (',' NAME)* ';' #declaration
 | NAME '=' expr ';'         #affectation
+| TYPE NAME '=' expr ';'    #declareAndAffec
 ;
 
 expr :
